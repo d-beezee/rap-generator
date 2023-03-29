@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [input, setInput] = useState("");
-  const [scenes, setScenes] = useState(4);
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<string>();
   const [response, setResponse] = useState<string>();
@@ -29,7 +27,7 @@ export default function Home() {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ text: input, scenes: scenes }),
+                body: JSON.stringify({}),
               });
 
               const data = await response.json();
@@ -42,7 +40,6 @@ export default function Home() {
 
               setResult(data.result);
               setResponse(JSON.stringify(data));
-              setInput("");
             } catch (error) {
               // Consider implementing your own error handling logic here
               console.error(error);
@@ -52,19 +49,6 @@ export default function Home() {
             }
           }}
         >
-          <textarea
-            name="animal"
-            placeholder="Simple description"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <input
-            type="number"
-            name="scenes"
-            placeholder="Number of scenes"
-            value={scenes}
-            onChange={(e) => setScenes(parseInt(e.target.value))}
-          />
           <input
             disabled={isLoading}
             type="submit"
@@ -73,7 +57,6 @@ export default function Home() {
         </form>
         <div className={styles.result}>
           <div style={{ whiteSpace: "pre-wrap" }}>{result}</div>
-          <div style={{ whiteSpace: "pre-wrap" }}>{response}</div>
         </div>
       </main>
     </div>
